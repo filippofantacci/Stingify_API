@@ -1,0 +1,251 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:pro="http://www.liquibase.org/xml/ns/pro" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-4.6.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.6.xsd">
+   
+    <changeSet author="Filippo Fantacci" id="1">
+        <createTable tableName="users">
+            <column autoIncrement="true" name="user_id" type="INT">
+                <constraints nullable="false" primaryKey="true" unique="true"/>
+            </column>
+            <column name="auth_id" type="VARCHAR(36)">
+                <constraints nullable="false" unique="true" />
+            </column>
+            <column name="first_name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+              <column name="email" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValueComputed="CURRENT_TIMESTAMP" name="insertion_timestamp" type="timestamp">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValueComputed="NULL" name="change_timestamp" type="timestamp"/>
+            <column defaultValueComputed="NULL" name="cancellation_timestamp" type="timestamp"/>
+        </createTable>
+
+        <createTable tableName="budget_books">
+            <column autoIncrement="true" name="budget_book_id" type="INT">
+                <constraints nullable="false" primaryKey="true" unique="true"/>
+            </column>
+            <column name="creator_user_id" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="description" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValueComputed="CURRENT_TIMESTAMP" name="insertion_timestamp" type="timestamp">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValueComputed="NULL" name="change_timestamp" type="timestamp"/>
+            <column defaultValueComputed="NULL" name="cancellation_timestamp" type="timestamp"/>
+        </createTable>
+		<addForeignKeyConstraint
+				baseColumnNames="creator_user_id" baseTableName="budget_books"
+				constraintName="budget_books_creator_user"
+				referencedColumnNames="user_id" referencedTableName="users"
+				validate="true" />
+		
+
+        <createTable tableName="users_budget_books">
+        	<column autoIncrement="true" name="users_budget_book_id" type="INT">
+                <constraints nullable="false" primaryKey="true" unique="true"/>
+            </column>
+            <column name="budget_book_id" type="INT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="user_id" type="INT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column defaultValueComputed="CURRENT_TIMESTAMP" name="insertion_timestamp" type="timestamp">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValueComputed="NULL" name="change_timestamp" type="timestamp"/>
+            <column defaultValueComputed="NULL" name="cancellation_timestamp" type="timestamp"/>
+        </createTable>
+		<addForeignKeyConstraint
+			baseColumnNames="budget_book_id" baseTableName="users_budget_books"
+			constraintName="users_budget_books_budget_books"
+			referencedColumnNames="budget_book_id"
+			referencedTableName="budget_books" validate="true" />
+		<addForeignKeyConstraint
+			baseColumnNames="user_id" baseTableName="users_budget_books"
+			constraintName="users_budget_books_user"
+			referencedColumnNames="user_id" referencedTableName="users"
+			validate="true" />
+	</changeSet>
+
+	<changeSet id="4" author="Filippo Fantacci">
+			<createTable tableName="categories">
+		 	<column autoIncrement="true" name="category_id" type="INT">
+                <constraints nullable="false" primaryKey="true" unique="true"/>
+            </column>
+            <column name="creator_user_id" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="description" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="macro_category_id" type="INT">
+                <constraints nullable="false"/>
+            </column>
+             <column defaultValueComputed="CURRENT_TIMESTAMP" name="insertion_timestamp" type="timestamp">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValueComputed="NULL" name="change_timestamp" type="timestamp"/>
+            <column defaultValueComputed="NULL" name="cancellation_timestamp" type="timestamp"/>
+		</createTable>
+		<addForeignKeyConstraint
+			baseColumnNames="creator_user_id" baseTableName="categories"
+			constraintName="categories_creator_user"
+			referencedColumnNames="user_id" referencedTableName="users"
+			validate="true" />
+
+	
+		<createTable tableName="macro_categories">
+			<column autoIncrement="true" name="macro_category_id" type="INT">
+                <constraints nullable="false" primaryKey="true" unique="true"/>
+            </column>
+            <column name="creator_user_id" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="description" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+             <column defaultValueComputed="CURRENT_TIMESTAMP" name="insertion_timestamp" type="timestamp">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValueComputed="NULL" name="change_timestamp" type="timestamp"/>
+            <column defaultValueComputed="NULL" name="cancellation_timestamp" type="timestamp"/>
+		</createTable>
+		<addForeignKeyConstraint
+			baseColumnNames="creator_user_id" baseTableName="macro_categories"
+			constraintName="macro_categories_creator_user"
+			referencedColumnNames="user_id" referencedTableName="users"
+			validate="true" />
+
+		<addForeignKeyConstraint
+			baseColumnNames="macro_category_id" baseTableName="categories"
+			constraintName="categories_macro_categories"
+			referencedColumnNames="macro_category_id"
+			referencedTableName="macro_categories" validate="true" />
+			
+		<createTable tableName="budget_books_categories">
+        	<column autoIncrement="true" name="budget_books_categories_id" type="INT">
+                <constraints nullable="false" primaryKey="true" unique="true"/>
+            </column>
+            <column name="budget_book_id" type="INT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="category_id" type="INT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column defaultValueComputed="CURRENT_TIMESTAMP" name="insertion_timestamp" type="timestamp">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValueComputed="NULL" name="change_timestamp" type="timestamp"/>
+            <column defaultValueComputed="NULL" name="cancellation_timestamp" type="timestamp"/>
+        </createTable>
+        
+        <addForeignKeyConstraint
+			baseColumnNames="budget_book_id" baseTableName="budget_books_categories"
+			constraintName="budget_books_categories_budget_book"
+			referencedColumnNames="budget_book_id" referencedTableName="budget_books"
+			validate="true" />
+        <addForeignKeyConstraint
+			baseColumnNames="category_id" baseTableName="budget_books_categories"
+			constraintName="budget_books_categories_categories"
+			referencedColumnNames="category_id"
+			referencedTableName="categories" validate="true" />
+	</changeSet>
+
+	<changeSet id="5" author="Filippo Fantacci">
+		
+		<createTable tableName="amount_type">
+			<column autoIncrement="true" name="amount_type_id" type="INT">
+                <constraints nullable="false" primaryKey="true" unique="true"/>
+            </column>
+            <column name="description" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+		</createTable>
+		
+	</changeSet>	
+	
+	<changeSet id="6" author="Filippo Fantacci">
+	
+		<createTable tableName="amounts">
+			<column autoIncrement="true" name="amount_id" type="INT">
+                <constraints nullable="false" primaryKey="true" unique="true"/>
+            </column>
+             <column name="budget_book_id" type="INT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+             <column name="creator_user_id" type="INT">
+                <constraints nullable="false"/>
+            </column>
+             <column name="date" type="DATETIME">
+                <constraints nullable="false" />
+            </column>
+            <column name="description" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="planned" type="decimal(7,2)" defaultValueNumeric="0">
+            	<constraints nullable="false"/>
+            </column>
+            <column name="actual" type="decimal(7,2)" defaultValueNumeric="0">
+            	<constraints nullable="false"/>
+            </column>
+            <column name="category_id" type="INT"></column>
+            <column name="amount_type_id" type="INT">
+            	<constraints nullable="false"/>
+            </column>
+            <column defaultValueComputed="CURRENT_TIMESTAMP" name="insertion_timestamp" type="timestamp">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValueComputed="NULL" name="change_timestamp" type="timestamp"/>
+            <column defaultValueComputed="NULL" name="cancellation_timestamp" type="timestamp"/>
+		</createTable>
+		
+		<addForeignKeyConstraint
+			baseColumnNames="amount_type_id" baseTableName="amounts"
+			constraintName="amounts_amount_type"
+			referencedColumnNames="amount_type_id" referencedTableName="amount_type"
+			validate="true" />
+		<addForeignKeyConstraint
+			baseColumnNames="creator_user_id" baseTableName="amounts"
+			constraintName="amounts_creator_user"
+			referencedColumnNames="user_id" referencedTableName="users"
+			validate="true" />
+		<addForeignKeyConstraint
+			baseColumnNames="budget_book_id" baseTableName="amounts"
+			constraintName="amounts_budget_book"
+			referencedColumnNames="budget_book_id" referencedTableName="budget_books"
+			validate="true" />
+		<addForeignKeyConstraint
+			baseColumnNames="category_id" baseTableName="amounts"
+			constraintName="amounts_category"
+			referencedColumnNames="category_id" referencedTableName="categories"
+			validate="true" />
+		
+	</changeSet>
+	
+	<changeSet id="7" author="Filippo Fantacci">
+		<addColumn tableName="categories" >
+			<column name="amount_type_id" type="INT">
+                <constraints nullable="false"/>
+            </column>
+		</addColumn>
+		<addForeignKeyConstraint
+			baseColumnNames="amount_type_id" baseTableName="categories"
+			constraintName="categories_amount_type"
+			referencedColumnNames="amount_type_id" referencedTableName="amount_type"
+			validate="true" />
+	</changeSet>
+
+	<changeSet id="8" author="Filippo Fantaci">
+		<dropNotNullConstraint tableName="categories" columnName="macro_category_id" columnDataType="INT"/>
+	</changeSet>
+
+</databaseChangeLog>

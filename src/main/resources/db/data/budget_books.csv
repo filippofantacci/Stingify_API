@@ -1,0 +1,6 @@
+budget_book_id;creator_user_id;description;insertion_timestamp;change_timestamp;cancellation_timestamp
+1;1;a;2022-10-24 16:35:52;NULL;NULL
+2;1;a;2022-10-24 16:35:57;NULL;NULL
+3;1;ab;2022-10-24 16:36:10;NULL;NULL
+4;1;abc;2022-10-24 16:36:13;NULL;NULL
+5;1;abcd;2022-10-24 16:36:15;NULL;NULL

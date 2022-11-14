@@ -1,0 +1,1 @@
+call docker run --name stingify_app_db_mysql -p 3306:3306 -e MYSQL_ALLOW_EMPTY_PASSWORD=yes mysql
