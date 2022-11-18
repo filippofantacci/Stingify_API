@@ -1,3 +1,3 @@
 user_id;auth_id;first_name;last_name;email;insertion_timestamp;change_timestamp;cancellation_timestamp
-1;2a4c1929-4014-4e62-8a20-e49252436ade;Filippo;Fantacci;filippo.fantacci@gmail.com;2022-10-20 12:32:46;NULL;NULL
+1;354271bc-9ac5-408a-9640-1aca6e064aed;Filippo;Fantacci;filippo.fantacci@gmail.com;2022-10-20 12:32:46;NULL;NULL
 2;b41e7e5a-9e98-428e-8bbe-e99cb49912a6;Fiamma;Pannini;fiamma.pannini@gmail.com;2022-10-24 23:20:42;NULL;NULL

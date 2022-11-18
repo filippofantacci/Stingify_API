@@ -1,0 +1,9 @@
+macro_category_id;creator_user_id;description;insertion_timestamp;change_timestamp;cancellation_timestamp
+1;1;Casa;2022-10-25 16:15:13;2022-10-26 10:51:53;NULL
+2;1;Lavoro;2022-11-01 17:35:06;NULL;NULL
+3;1;Svago;2022-11-01 17:36:08;NULL;NULL
+4;1;Vacanze;2022-11-01 17:37:29;NULL;NULL
+5;1;Test macrocategoria;2022-11-09 11:05:29;NULL;NULL
+9;1;con tutte le categorie;2022-11-11 17:56:27;2022-11-12 17:40:19;NULL
+10;1;Sovranista;2022-11-11 18:01:43;2022-11-14 17:12:27;NULL
+11;1;l'ho creata li per li;2022-11-11 21:13:29;NULL;NULL

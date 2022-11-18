@@ -4,3 +4,6 @@ users_budget_book_id;budget_book_id;user_id;insertion_timestamp;change_timestamp
 3;3;1;2022-10-24 16:36:10;NULL;NULL
 4;4;1;2022-10-24 16:36:13;NULL;NULL
 5;5;1;2022-10-24 16:36:15;NULL;NULL
+6;3;1;2022-10-24 19:33:08;NULL;NULL
+8;7;1;2022-11-08 11:54:23;NULL;NULL
+9;8;1;2022-11-08 12:39:12;NULL;NULL

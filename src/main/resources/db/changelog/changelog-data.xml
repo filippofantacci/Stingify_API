@@ -1,44 +1,94 @@
 <?xml version="1.1" encoding="UTF-8" standalone="no"?>
-<databaseChangeLog 
-	   xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
-   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-   xmlns:pro="http://www.liquibase.org/xml/ns/pro"
-   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+<databaseChangeLog
+	xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:pro="http://www.liquibase.org/xml/ns/pro"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
       http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.1.xsd
       http://www.liquibase.org/xml/ns/pro 
       http://www.liquibase.org/xml/ns/pro/liquibase-pro-4.1.xsd">
-  
-  
-    <changeSet author="Filippo Fantacci" id="2">
-         <loadData file="db/data/users.csv" separator=";" tableName="users">
-            <column name="user_id" type="numeric"/>
-            <column name="auth_id" type="string"/>
-            <column name="first_name" type="string"/>
-            <column name="last_name" type="string"/>
-            <column name="email" type="string"/>
-            <column name="insertion_timestamp" type="timestamp"/>
-            <column name="change_timestamp" type="timestamp"/>
-            <column name="cancellation_timestamp" type="timestamp"/> 
-        </loadData>
-        
-         <loadData file="db/data/budget_books.csv" separator=";" tableName="budget_books">
-            <column name="budget_book_id" type="numeric"/>
-            <column name="creator_user_id" type="numeric"/>
-            <column name="description" type="string"/>            
-            <column name="insertion_timestamp" type="timestamp"/>
-            <column name="change_timestamp" type="timestamp"/>
-            <column name="cancellation_timestamp" type="timestamp"/> 
-        </loadData>
-        
-        <loadData file="db/data/users_budget_books.csv" separator=";" tableName="users_budget_books">
-            <column name="users_budget_book_id" type="numeric"/>
-            <column name="budget_book_id" type="numeric"/>
-            <column name="user_id" type="numeric"/>
-            <column name="insertion_timestamp" type="timestamp"/>
-            <column name="change_timestamp" type="timestamp"/>
-            <column name="cancellation_timestamp" type="timestamp"/> 
-        </loadData>
-        
-    </changeSet>
+
+
+	<changeSet author="Filippo Fantacci" id="2">
+		<loadData file="db/data/users.csv" separator=";" tableName="users">
+			<column name="user_id" type="numeric" />
+			<column name="auth_id" type="string" />
+			<column name="first_name" type="string" />
+			<column name="last_name" type="string" />
+			<column name="email" type="string" />
+			<column name="insertion_timestamp" type="timestamp" />
+			<column name="change_timestamp" type="timestamp" />
+			<column name="cancellation_timestamp" type="timestamp" />
+		</loadData>
+
+		<loadData file="db/data/budget_books.csv" separator=";" tableName="budget_books">
+			<column name="budget_book_id" type="numeric" />
+			<column name="creator_user_id" type="numeric" />
+			<column name="description" type="string" />
+			<column name="insertion_timestamp" type="timestamp" />
+			<column name="change_timestamp" type="timestamp" />
+			<column name="cancellation_timestamp" type="timestamp" />
+		</loadData>
+
+		<loadData file="db/data/users_budget_books.csv" separator=";" tableName="users_budget_books">
+			<column name="users_budget_book_id" type="numeric" />
+			<column name="budget_book_id" type="numeric" />
+			<column name="user_id" type="numeric" />
+			<column name="insertion_timestamp" type="timestamp" />
+			<column name="change_timestamp" type="timestamp" />
+			<column name="cancellation_timestamp" type="timestamp" />
+		</loadData>
+
+		<loadData file="db/data/amount_type.csv" separator=";" tableName="amount_type">
+			<column name="amount_type_id" type="numeric" />
+			<column name="description" type="string" />
+		</loadData>
+
+		<loadData file="db/data/macro_categories.csv" separator=";" tableName="macro_categories">
+			<column name="macro_category_id" type="numeric" />
+			<column name="creator_user_id" type="numeric" />
+			<column name="description" type="string" />
+			<column name="insertion_timestamp" type="timestamp" />
+			<column name="change_timestamp" type="timestamp" />
+			<column name="cancellation_timestamp" type="timestamp" />
+		</loadData>
+
+		<loadData file="db/data/categories.csv" separator=";" tableName="categories">
+			<column name="category_id" type="numeric" />
+			<column name="creator_user_id" type="numeric" />
+			<column name="description" type="string" />
+			<column name="amount_type_id" type="numeric" />
+			<column name="macro_category_id" type="numeric" />
+			<column name="insertion_timestamp" type="timestamp" />
+			<column name="change_timestamp" type="timestamp" />
+			<column name="cancellation_timestamp" type="timestamp" />
+		</loadData>
+
+		<loadData file="db/data/budget_books_categories.csv" separator=";" tableName="budget_books_categories">
+			<column name="budget_books_categories_id" type="numeric" />
+			<column name="budget_book_id" type="numeric" />
+			<column name="category_id" type="numeric" />
+			<column name="insertion_timestamp" type="timestamp" />
+			<column name="change_timestamp" type="timestamp" />
+			<column name="cancellation_timestamp" type="timestamp" />
+		</loadData>
+
+		<loadData file="db/data/amounts.csv" separator=";" tableName="amounts">
+			<column name="amount_id" type="numeric" />
+			<column name="budget_book_id" type="numeric" />
+			<column name="creator_user_id" type="numeric" />
+			<column name="date" type="date" />
+			<column name="description" type="string" />
+			<column name="planned" type="numeric" />
+			<column name="actual" type="numeric" />
+			<column name="category_id" type="numeric" />
+			<column name="amount_type_id" type="numeric" />
+			<column name="insertion_timestamp" type="timestamp" />
+			<column name="change_timestamp" type="timestamp" />
+			<column name="cancellation_timestamp" type="timestamp" />
+		</loadData>
+
+
+	</changeSet>
 
 </databaseChangeLog>
