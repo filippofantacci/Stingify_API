@@ -15,4 +15,7 @@ public class BudgetBookDTO {
 	private Timestamp insertionTimestamp;
 	private Timestamp changeTimestamp;
 	private Timestamp cancellationTimestamp;
+	private Float expenses;
+	private Float incomings;
+	private Float savings;
 }
