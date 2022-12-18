@@ -13,7 +13,7 @@ public interface MacroCategoryRepository  extends CrudRepository<MacroCategory, 
 
 	@Query(value= " SELECT DISTINCT MC "
 			+ " FROM MacroCategory MC "
-			+ " JOIN Category C "
+			+ " LEFT JOIN Category C "
 			+ "  ON C.macroCategory.macroCategoryId = MC.macroCategoryId "
 			+ " WHERE MC.creatorUserId = :userId "
 			+ " ORDER BY "
