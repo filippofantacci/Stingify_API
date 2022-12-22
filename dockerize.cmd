@@ -8,6 +8,7 @@ call mvn clean install -DskipTests
 echo ---------- greate image-----------
 pause
 call docker build -t stingify/stingify-api .
+::call docker build -t filippofantacci/stingify-api:versione1.0 .
 
 
 echo --------- run container ---------

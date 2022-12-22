@@ -247,5 +247,80 @@
 	<changeSet id="8" author="Filippo Fantaci">
 		<dropNotNullConstraint tableName="categories" columnName="macro_category_id" columnDataType="INT"/>
 	</changeSet>
-
+	
+	<changeSet id="9" author="Filippo Fantacci">
+	
+		<createTable tableName="recurring_amounts">
+			<column autoIncrement="true" name="recurring_amount_id" type="INT">
+                <constraints nullable="false" primaryKey="true" unique="true"/>
+            </column>
+             <column name="creator_user_id" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="description" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="planned" type="decimal(7,2)" defaultValueNumeric="0">
+            	<constraints nullable="false"/>
+            </column>
+            <column name="actual" type="decimal(7,2)" defaultValueNumeric="0">
+            	<constraints nullable="false"/>
+            </column>
+            <column name="category_id" type="INT"></column>
+            <column name="amount_type_id" type="INT">
+            	<constraints nullable="false"/>
+            </column>
+            <column defaultValueComputed="CURRENT_TIMESTAMP" name="insertion_timestamp" type="timestamp">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValueComputed="NULL" name="change_timestamp" type="timestamp"/>
+            <column defaultValueComputed="NULL" name="cancellation_timestamp" type="timestamp"/>
+		</createTable>
+		
+		<addForeignKeyConstraint
+			baseColumnNames="amount_type_id" baseTableName="recurring_amounts"
+			constraintName="recurring_amounts_amount_type"
+			referencedColumnNames="amount_type_id" referencedTableName="amount_type"
+			validate="true" />
+		<addForeignKeyConstraint
+			baseColumnNames="creator_user_id" baseTableName="recurring_amounts"
+			constraintName="recurring_amounts_creator_user"
+			referencedColumnNames="user_id" referencedTableName="users"
+			validate="true" />
+		<addForeignKeyConstraint
+			baseColumnNames="category_id" baseTableName="recurring_amounts"
+			constraintName="recurring_amounts_category"
+			referencedColumnNames="category_id" referencedTableName="categories"
+			validate="true" />
+	
+	<!-- 		
+		<createTable tableName="budget_books_recurring_amounts">
+        	<column autoIncrement="true" name="budget_books_recurring_amounts_id" type="INT">
+                <constraints nullable="false" primaryKey="true" unique="true"/>
+            </column>
+            <column name="budget_book_id" type="INT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="recurring_amount_id" type="INT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column defaultValueComputed="CURRENT_TIMESTAMP" name="insertion_timestamp" type="timestamp">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValueComputed="NULL" name="change_timestamp" type="timestamp"/>
+            <column defaultValueComputed="NULL" name="cancellation_timestamp" type="timestamp"/>
+        </createTable>
+        
+        <addForeignKeyConstraint
+			baseColumnNames="budget_book_id" baseTableName="budget_books_recurring_amounts"
+			constraintName="budget_books_recurring_amounts_budget_book"
+			referencedColumnNames="budget_book_id" referencedTableName="budget_books"
+			validate="true" />
+        <addForeignKeyConstraint
+			baseColumnNames="recurring_amount_id" baseTableName="budget_books_recurring_amounts"
+			constraintName="budget_books_recurring_amounts_recurring_amounts"
+			referencedColumnNames="recurring_amount_id"
+			referencedTableName="recurring_amounts" validate="true" />
+	 -->
+	</changeSet>
 </databaseChangeLog>
