@@ -18,4 +18,5 @@ public class BudgetBookDTO {
 	private Float expenses;
 	private Float incomings;
 	private Float savings;
+	private List<RecurringAmountDTO> recurringAmounts;
 }

@@ -27,7 +27,7 @@ public class AmountsService {
 
 	@Autowired
 	private BudgetBooksRepository budgetBooksRepository;
-	
+
 	@Autowired
 	private AmountMapper amountMapper;
 
@@ -45,7 +45,7 @@ public class AmountsService {
 			return null;
 		}
 	}
-	
+
 	public Page<AmountDTO> getAmountsByBudgetBookId(Integer budgetBookId, Pageable pageable) {
 		return amountRepository.findAmountsByBudgetBookId(budgetBookId, pageable).map(amountMapper::toDto);
 	}
@@ -55,7 +55,21 @@ public class AmountsService {
 		AmountDTO amountDTO = amountMapper.toDto(amountRepository.save(amountMapper.toEntity(amount)));
 		budgetBooksRepository.updateChangeTimestamp(amountDTO.getBudgetBookId(), amountDTO.getInsertionTimestamp());
 		return amountDTO;
-		
+
+	}
+
+	public List<AmountDTO> addRecurringAmounts(List<AmountDTO> recurringAmounts) {
+		Timestamp currentTimestamp = new Timestamp(new Date().getTime());
+
+		List<AmountDTO> addedAmounts = new ArrayList<>();
+		for (AmountDTO amountDTO : recurringAmounts) {
+			amountDTO.setInsertionTimestamp(currentTimestamp);
+			addedAmounts.add(amountMapper.toDto(amountRepository.save(amountMapper.toEntity(amountDTO))));
+		}
+		if (!addedAmounts.isEmpty()) {
+			budgetBooksRepository.updateChangeTimestamp(addedAmounts.get(0).getBudgetBookId(), currentTimestamp);
+		}
+		return addedAmounts;
 	}
 
 	public AmountDTO updateAmount(AmountDTO amount) {

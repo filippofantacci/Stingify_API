@@ -13,6 +13,7 @@ public interface RecurringAmountRepository  extends CrudRepository<RecurringAmou
 
 	@Query(value = "SELECT RA FROM RecurringAmount RA " 
 			+ " WHERE RA.creatorUserId = :userId "
-			+ " ORDER BY RA.description DESC")
+			+ " AND RA.cancellationTimestamp = null"
+			+ " ORDER BY RA.description ASC")
 	Page<RecurringAmount> findRecurringAmountsByUserId(Integer userId, Pageable pageable);
 }

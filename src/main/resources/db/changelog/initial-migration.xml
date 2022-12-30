@@ -323,4 +323,11 @@
 			referencedTableName="recurring_amounts" validate="true" />
 	 -->
 	</changeSet>
+	
+	<changeSet id="10" author="Filippo Fantacci">
+	
+		<addColumn tableName="amounts">
+			<column name="recurring_amount_id" type="INT"></column>
+		</addColumn>
+	</changeSet>
 </databaseChangeLog>

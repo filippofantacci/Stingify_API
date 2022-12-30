@@ -27,4 +27,5 @@ public class AmountDTO {
 	private Timestamp changeTimestamp;
 	private Timestamp cancellationTimestamp;
 
+	private Integer recurringAmountId;
 }

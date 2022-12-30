@@ -97,6 +97,20 @@ public class AmountsController {
 		}
 	}
 
+	@PostMapping("/amounts/recurrings")
+	public ResponseEntity<List<AmountDTO>> addRecurringAmounts(@RequestBody List<AmountDTO> recurringAmounts) {
+		log.info("REST request to /amounts: addRecurringAmounts with input {}", recurringAmounts);
+		try {
+			List<AmountDTO> addedAmounts = amountsService.addRecurringAmounts(recurringAmounts);
+			log.info("Amounts retrieved: {}", addedAmounts.size());
+			return new ResponseEntity<>(addedAmounts, HttpStatus.OK);
+		} catch (Exception e) {
+			log.error("error message {}", e.getMessage());
+			e.printStackTrace();
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	
 	@PutMapping("/amounts")
 	public ResponseEntity<AmountDTO> updateAmount(@RequestBody AmountDTO amount) {
 		log.info("REST request to /amounts: updateAmount with input {}", amount);

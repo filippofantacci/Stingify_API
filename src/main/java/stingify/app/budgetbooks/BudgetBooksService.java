@@ -15,15 +15,19 @@ import org.springframework.stereotype.Service;
 import stingify.app.dto.BudgetBookDTO;
 import stingify.app.dto.BudgetBooksCategoriesDTO;
 import stingify.app.dto.CategoryDTO;
+import stingify.app.dto.RecurringAmountDTO;
 import stingify.app.dto.UserBudgetBooksDTO;
+import stingify.app.entity.Amount;
 import stingify.app.entity.BudgetBook;
 import stingify.app.entity.BudgetBooksCategories;
 import stingify.app.entity.User;
 import stingify.app.entity.UserBudgetBooks;
+import stingify.app.mapper.AmountTypeMapper;
 import stingify.app.mapper.BudgetBookMapper;
 import stingify.app.mapper.BudgetBooksCategoriesMapper;
 import stingify.app.mapper.CategoryMapper;
 import stingify.app.mapper.UserBudgetBooksMapper;
+import stingify.app.repository.AmountRepository;
 import stingify.app.repository.BudgetBooksCategoriesRepository;
 import stingify.app.repository.BudgetBooksRepository;
 import stingify.app.repository.UserBudgetBooksRepository;
@@ -39,6 +43,9 @@ public class BudgetBooksService {
 
 	@Autowired
 	private BudgetBooksCategoriesRepository budgetBooksCategoriesRepository;
+	
+	@Autowired
+	private AmountRepository amountRepository;
 
 	@Autowired
 	private BudgetBookMapper budgetBookMapper;
@@ -48,6 +55,9 @@ public class BudgetBooksService {
 
 	@Autowired
 	private CategoryMapper categoryMapper;
+	
+	@Autowired
+	private AmountTypeMapper amountTypeMapper;
 
 	@Autowired
 	private BudgetBooksCategoriesMapper budgetBooksCategoriesMapper;
@@ -100,6 +110,27 @@ public class BudgetBooksService {
 		// get the created categories
 		BudgetBookDTO addedbuBookDTO = budgetBookMapper.toDto(addedBudgetBook);
 		addedbuBookDTO.setCategories(this.getAllBudgetBooksCategories(addedbuBookDTO.getBudgetBookId()));
+		// insert the recurring amounts
+		if (budgetBookDTO.getRecurringAmounts() != null && !budgetBookDTO.getRecurringAmounts().isEmpty()) {
+			for (RecurringAmountDTO recurringAmount: budgetBookDTO.getRecurringAmounts()) {
+				
+			Amount amount = new Amount();
+			amount.setRecurringAmountId(recurringAmount.getRecurringAmountId());
+			amount.setAmountType(amountTypeMapper.toEntity(recurringAmount.getAmountType()));
+			amount.setCategory(categoryMapper.toEntity(recurringAmount.getCategory()));
+			amount.setDescription(recurringAmount.getDescription());
+			amount.setPlanned(recurringAmount.getPlanned());
+			amount.setActual(recurringAmount.getActual());
+			amount.setCreatorUserId(recurringAmount.getCreatorUserId());
+			amount.setBudgetBookId(addedbuBookDTO.getBudgetBookId());
+			amount.setDate(new Date());
+			amount.setInsertionTimestamp(addedbuBookDTO.getInsertionTimestamp());
+			amount.setChangeTimestamp(addedbuBookDTO.getChangeTimestamp());
+			amount.setCancellationTimestamp(addedbuBookDTO.getCancellationTimestamp());
+			
+			this.amountRepository.save(amount);
+			}
+		}
 		return addedbuBookDTO;
 	}
 
