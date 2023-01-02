@@ -14,6 +14,6 @@ public interface AmountRepository  extends CrudRepository<Amount, Integer>  {
 	@Query(value = "SELECT A FROM Amount A " 
 			+ " WHERE A.budgetBookId = :budgetBookId "
 			+ " AND A.cancellationTimestamp = null "
-			+ " ORDER BY A.date DESC")
+			+ " ORDER BY A.date ASC")
 	Page<Amount> findAmountsByBudgetBookId(Integer budgetBookId, Pageable pageable);
 }
