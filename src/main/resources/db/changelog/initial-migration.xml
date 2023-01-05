@@ -254,7 +254,7 @@
 			<column autoIncrement="true" name="recurring_amount_id" type="INT">
                 <constraints nullable="false" primaryKey="true" unique="true"/>
             </column>
-             <column name="creator_user_id" type="INT">
+            <column name="creator_user_id" type="INT">
                 <constraints nullable="false"/>
             </column>
             <column name="description" type="VARCHAR(255)">
@@ -330,4 +330,43 @@
 			<column name="recurring_amount_id" type="INT"></column>
 		</addColumn>
 	</changeSet>
+	
+	<!--
+	<changeSet id="11" author="Filippo Fantacci">
+		
+		<createTable tableName="saving_goals">
+			<column autoIncrement="true" name="saving_goal_id" type="INT">
+                <constraints nullable="false" primaryKey="true" unique="true"/>
+            </column>
+            <column name="creator_user_id" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="description" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="category_id" type="INT"></column>
+             <column name="goal" type="decimal(7,2)" defaultValueNumeric="0">
+            	<constraints nullable="false"/>
+            </column>
+            <column defaultValueComputed="CURRENT_TIMESTAMP" name="insertion_timestamp" type="timestamp">
+            	<constraints nullable="false"/>
+            </column>
+            <column defaultValueComputed="NULL" name="change_timestamp" type="timestamp"/>
+            <column defaultValueComputed="NULL" name="cancellation_timestamp" type="timestamp"/>
+		</createTable>
+		
+		<addForeignKeyConstraint
+			baseColumnNames="creator_user_id" baseTableName="saving_goals"
+			constraintName="saving_goals_creator_user"
+			referencedColumnNames="user_id" referencedTableName="users"
+			validate="true" />
+		<addForeignKeyConstraint
+			baseColumnNames="category_id" baseTableName="saving_goals"
+			constraintName="saving_goals_category"
+			referencedColumnNames="category_id" referencedTableName="categories"
+			validate="true" />
+		
+	</changeSet>
+	-->
+	
 </databaseChangeLog>
